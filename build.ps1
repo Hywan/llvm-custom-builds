@@ -26,7 +26,9 @@ git checkout "release/$LLVM_VERSION"
 git reset --hard origin/"release/$LLVM_VERSION"
 
 # Create a directory to build the project.
-New-Item -Path "build" -Force -ItemType "directory"
+New-Item -Path "build/Release/include" -Force -ItemType "directory"
+# Copy llvm-c headers
+Copy-Item -r llvm/include/llvm-c build/Release/include
 Set-Location build
 
 # Create a directory to receive the complete installation.
@@ -50,9 +52,12 @@ cmake `
 	-DLLVM_INCLUDE_TOOLS=ON `
 	-DLLVM_INCLUDE_UTILS=OFF `
 	-DLLVM_OPTIMIZED_TABLEGEN=ON `
-	-DLLVM_TARGETS_TO_BUILD="X86;AArch64" `
+	-DLLVM_STATIC_LINK_CXX_STDLIB=ON `
 	$CMAKE_ARGUMENTS `
 	../llvm
+
+# Copy llvm headers
+Copy-Item -r include/llvm Release/include
 
 # Showtime!
 cmake --build . --config Release --target INSTALL
