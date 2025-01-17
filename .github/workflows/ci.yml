@@ -13,7 +13,7 @@ jobs:
             os: 'ubuntu-20.04'
             tar_extra_args: ''
           - id: 'linux-aarch64'
-            os: "ubuntu-latest"
+            os: "ubuntu-24.04-arm"
           #  os: ['self-hosted', 'linux', 'ARM64']
           - id: 'linux-riscv64'
             os: "ubuntu-latest"
@@ -36,7 +36,7 @@ jobs:
             # adds an additional copy per link, but it reliably works and
             # the additional size is not too large on Windows.
             tar_extra_args: '--dereference'
-        llvm_version: ['18.x']
+        llvm_version: ['19.x']
         llvm_repo_url: ['https://github.com/llvm/llvm-project.git']
       fail-fast: true
 
@@ -136,7 +136,7 @@ jobs:
 
     strategy:
       matrix:
-        llvm_version: ['18.x']
+        llvm_version: ['19.x']
 
     steps:
       - name: Download the Artifacts
